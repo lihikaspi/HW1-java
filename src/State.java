@@ -1,5 +1,17 @@
 public class State {
 
+    public boolean isGoal() {
+
+    }
+
+    public int[] actions() { // ???????????
+
+    }
+
+    public State result(Action action) {
+
+    }
+
     @Override
     public boolean equals(Object other) {
         if (!(other instanceof State)) {
