@@ -1,15 +1,26 @@
 public class State {
+    public Board board;
 
-    public boolean isGoal() {
-
+    public State(Board board) {
+        this.board = board;
     }
 
-    public int[] actions() { // ???????????
+    public boolean isGoal() {
+        Tile[] tiles = board.getTiles();
+        for (int i = 0; i < tiles.length; i++) {
+            if (tiles[i].getValue() != i+1) return false;
+        }
+        return true;
+    }
+
+    public Direction[] actions() { // ???????????
 
     }
 
     public State result(Action action) {
-
+        Board newBoard = new Board(this.board);
+        action.moveTile(newBoard);
+        return new State(newBoard);
     }
 
     @Override

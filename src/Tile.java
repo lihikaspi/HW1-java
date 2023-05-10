@@ -1,6 +1,9 @@
 public class Tile {
     public final int value; // cannot change after initialization // 0 for empty tile
 
+    public Tile() {
+        this.value = 0;
+    }
     public Tile(int value) {
         this.value = value;
     }

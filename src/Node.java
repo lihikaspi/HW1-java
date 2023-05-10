@@ -1,5 +1,9 @@
 public class Node {
 
+    public Node() {
+
+    }
+
     public Node[] expand() {
 
     }
