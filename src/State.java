@@ -1,5 +1,5 @@
 public class State {
-    public Board board;
+    private Board board;
 
     public State(Board board) {
         this.board = board;

@@ -1,9 +1,9 @@
 import java.util.Arrays;
 
 public class Board {
-    public Tile[] tiles;
-    public int row; // size of each row
-    public int col; // size of each column
+    private Tile[] tiles;
+    private int row; // size of each row
+    private int col; // size of each column
 
     public Board(String boardString) {
         findSize(boardString); // find board size through string

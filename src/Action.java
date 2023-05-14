@@ -1,6 +1,6 @@
 public class Action {
-    public Tile tile;
-    public Direction direction;
+    private Tile tile;
+    private Direction direction;
 
     public Action(Tile tile, Direction direction){
         this.tile = tile;
