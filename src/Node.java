@@ -25,10 +25,12 @@ public class Node {
     }
 
     public int heuristicValue() {
-        int value = state.getBoard().getCol() * state.getBoard().getRow();
+        int value = state.getBoard().getNumOfCols() * state.getBoard().getNumOfRows();
         for (int i = 0; i < state.getBoard().getTiles().length; i++) {
-            if (state.getBoard().getTiles()[i].getValue() == i+1) value--;
-            else return value;
+            for (int j = 0; j < state.getBoard().getTiles()[i].length; j++) {
+                if (state.getBoard().getTiles()[i][j].getValue() == i + 1) value--;
+                else return value;
+            }
         }
         return value;
     }

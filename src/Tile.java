@@ -4,6 +4,11 @@ public class Tile {
     public Tile() {
         this.value = 0;
     }
+
+    public Tile(Tile tile) {
+        this.value = tile.getValue();
+    }
+
     public Tile(int value) {
         this.value = value;
     }

@@ -6,46 +6,54 @@ public class State {
     }
 
     public boolean isGoal() {
-        Tile[] tiles = board.getTiles();
+        Tile[][] tiles = board.getTiles();
         for (int i = 0; i < tiles.length; i++) {
-            if (tiles[i].getValue() != i+1) return false;
+            for (int j = 0; j < tiles[i].length; j++) {
+                if (tiles[i][j].getValue() != i + 1) return false;
+            }
         }
         return true;
     }
 
     public Action[] actions() {
-        int empty  = findEmptyTile();
+        int[] empty  = findEmptyTile();
         Action[] actions = new Action[0];
-        if (empty-board.getRow() >= 0)
-            actions = append(actions, new Action(board.getTiles()[empty], Direction.UP));
-        else if (empty+board.getRow() < board.getTiles().length)
-            actions = append(actions, new Action(board.getTiles()[empty], Direction.UP));
-        else if (empty-1 >= 0)
-            actions = append(actions, new Action(board.getTiles()[empty], Direction.UP));
-        else if (empty+1 < board.getTiles().length)
-            actions = append(actions, new Action(board.getTiles()[empty], Direction.UP));
+        if (empty[0]-1 >= 0)
+            actions = append(actions, new Action(board.getTiles()[empty[0]][empty[1]], Direction.DOWN));
+        if (empty[0]+1 < board.getNumOfRows())
+            actions = append(actions, new Action(board.getTiles()[empty[0]][empty[1]], Direction.UP));
+        if (empty[1]-1 >= 0)
+            actions = append(actions, new Action(board.getTiles()[empty[0]][empty[1]], Direction.RIGHT));
+        if (empty[1]+1 < board.getNumOfCols())
+            actions = append(actions, new Action(board.getTiles()[empty[0]][empty[1]], Direction.LEFT));
         return actions;
     }
 
     private Action[] append(Action[] actions, Action add) {
-        int len = board.getTiles().length+1;
-        Action[] newActions = new Action[len];
-        for (int i = 0; i < len-1; i++) {
+        Action[] newActions = new Action[actions.length+1];
+        for (int i = 0; i < actions.length; i++) {
             newActions[i] = actions[i];
         }
-        newActions[len-1] = add;
+        newActions[actions.length] = add;
         return newActions;
     }
 
-    private int findEmptyTile() {
+    private int[] findEmptyTile() {
+        int[] empty = new int[2];
         for (int i = 0; i < board.getTiles().length; i++) {
-            if (board.getTiles()[i].getValue() == 0) return i;
+            for (int j = 0; j < board.getTiles()[i].length; j++) {
+                if (board.getTiles()[i][j].getValue() == 0) {
+                    empty[0] = i;
+                    empty[1] = j;
+                    return empty;
+                }
+            }
         }
-        return -1;
+        return empty;
     }
 
     public State result(Action action) {
-        Board newBoard = new Board(this.board);
+        Board newBoard = new Board(this.board, this.board.getNumOfRows(), this.board.getNumOfCols());
         action.moveTile(newBoard);
         return new State(newBoard);
     }
