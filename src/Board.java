@@ -32,12 +32,9 @@ public class Board {
         int rowLen = 0;
         int colLen = 1;
         int i = 0;
-        while(boardString.charAt(i) != '|') {
-            rowLen++;
-            i++;
-        }
         for (i = 0; i < boardString.length(); i++) {
             if(boardString.charAt(i) == '|') colLen++;
+            if (boardString.charAt(i) != '|') rowLen++;
         }
         this.row = rowLen;
         this.col = colLen;
