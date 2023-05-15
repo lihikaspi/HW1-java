@@ -1,4 +1,7 @@
 public class Node {
+    private State state;
+    private Action action;
+    private Node fatherNode;
 
     public Node() {
 

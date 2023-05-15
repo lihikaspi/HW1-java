@@ -1,12 +1,13 @@
 public class Action {
-    private Tile tile;
-    private Direction direction;
+    private final Tile tile;
+    private final Direction direction;
 
     public Action(Tile tile, Direction direction){
         this.tile = tile;
         this.direction = direction;
     }
 
+    @Override
     public String toString() {
         String direction = null;
         if (this.direction == Direction.UP) direction = "up";
@@ -27,6 +28,5 @@ public class Action {
                 tiles[i] = this.tile;
             }
         }
-
     }
 }
