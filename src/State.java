@@ -6,16 +6,7 @@ public class State {
     }
 
     public boolean isGoal() {
-        int count = 1;
-        Tile[][] tiles = board.getTiles();
-        for (int i = 0; i < tiles.length; i++) {
-            for (int j = 0; j < tiles[i].length; j++) {
-                if (i == tiles.length-1 && j == tiles[i].length-1) return true;
-                if (tiles[i][j].getValue() != count) return false;
-                else count++;
-            }
-        }
-        return true;
+        return board.checkTarget();
     }
 
     public Action[] actions() {
