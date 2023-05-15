@@ -1,5 +1,5 @@
 public class State {
-    private Board board;
+    private final Board board;
 
     public State(Board board) {
         this.board = board;
@@ -48,6 +48,10 @@ public class State {
         Board newBoard = new Board(this.board);
         action.moveTile(newBoard);
         return new State(newBoard);
+    }
+
+    public Board getBoard(){
+        return this.board;
     }
 
     @Override

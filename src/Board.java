@@ -21,6 +21,13 @@ public class Board {
         }
     }
 
+    public Board(Tile[] tiles) {
+        this.tiles = new Tile[tiles.length];
+        for (int i = 0; i < tiles.length; i++) {
+            tiles[i] = new Tile(tiles[i].getValue());
+        }
+    }
+
     private void findSize(String boardString){
         int rowLen = 0;
         int colLen = 1;
