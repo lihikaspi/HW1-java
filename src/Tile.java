@@ -1,5 +1,6 @@
 public class Tile {
     private final int value; // cannot change after initialization // 0 for empty tile
+    private int dist;
 
     public Tile() {
         this.value = 0;

@@ -29,12 +29,10 @@ public class Board {
     /**
      * copy constructor
      * @param board board to copy
-     * @param numOfRows how many rows
-     * @param numOfCols how many columns
      */
-    public Board(Board board, int numOfRows, int numOfCols) {
-        this.numOfCols = numOfCols;
-        this.numOfRows = numOfRows;
+    public Board(Board board) {
+        this.numOfCols = board.getNumOfCols();
+        this.numOfRows = board.getNumOfRows();
         this.tiles = new Tile[numOfRows][numOfCols];
         for (int i = 0; i < board.getTiles().length; i++) { // copy the values of the array -- not addresses
             for (int j = 0; j < board.getTiles()[i].length; j++) {
@@ -70,6 +68,71 @@ public class Board {
             }
         }
         return true;
+    }
+
+    public int[] findTile(int value) {
+        int[] place = new int[2];
+        for (int i = 0; i < this.numOfRows; i++) {
+            for (int j = 0; j < this.numOfCols; j++) {
+                if (this.tiles[i][j].getValue() == value) {
+                    place[0] = i;
+                    place[1] = j;
+                    return place;
+                }
+            }
+        }
+        return place;
+    }
+
+    public int calcHeuristicValue() {
+        int count = 1;
+        int value = numOfCols * numOfRows;
+        for (int i = 0; i < tiles.length; i++) {
+            for (int j = 0; j < tiles[i].length; j++) {
+                if (tiles[i][j].getValue() != count) {
+                    int[] next = findTile(count);
+                    int[] empty = findTile(0);
+                    value *= (absolute(i-next[0]) + absolute(j-next[1]));
+                    value += (absolute(i-empty[0]) + absolute(j-empty[1]));
+                    return value;
+                } else {
+                    value--;
+                    count++;
+                }
+            }
+        }
+        return value;
+    }
+
+    public void moveTile(Action action) {
+        for (int i = 0; i < tiles.length; i++) {
+            for (int j = 0; j < tiles[i].length; j++) {
+                if (tiles[i][j].getValue() == 0) {
+                    switch (action.getDirection()) {
+                        case RIGHT:
+                            swapTiles(i, j, i, j-1);
+                            return;
+
+                        case LEFT:
+                            swapTiles(i, j, i, j+1);
+                            return;
+
+                        case UP:
+                            swapTiles(i, j, i+1, j);
+                            return;
+
+                        case DOWN:
+                            swapTiles(i, j, i-1, j);
+                            return;
+                    }
+                }
+            }
+        }
+    }
+
+    private int absolute(int num) {
+        if (num >= 0) return num;
+        return -num;
     }
 
     /**

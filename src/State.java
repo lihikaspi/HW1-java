@@ -6,11 +6,11 @@ public class State {
     }
 
     public boolean isGoal() {
-        return board.checkTarget();
+        return this.board.checkTarget();
     }
 
     public Action[] actions() {
-        int[] empty  = findEmptyTile();
+        int[] empty  = board.findTile(0);
         Action[] actions = new Action[0];
         if (empty[0]+1 < board.getNumOfRows())
             actions = append(actions, new Action(board.getTiles()[empty[0]+1][empty[1]], Direction.UP));
@@ -32,23 +32,9 @@ public class State {
         return newActions;
     }
 
-    private int[] findEmptyTile() {
-        int[] empty = new int[2];
-        for (int i = 0; i < board.getTiles().length; i++) {
-            for (int j = 0; j < board.getTiles()[i].length; j++) {
-                if (board.getTiles()[i][j].getValue() == 0) {
-                    empty[0] = i;
-                    empty[1] = j;
-                    return empty;
-                }
-            }
-        }
-        return empty;
-    }
-
     public State result(Action action) {
-        Board newBoard = new Board(this.board, this.board.getNumOfRows(), this.board.getNumOfCols());
-        action.moveTile(newBoard);
+        Board newBoard = new Board(this.board);
+        newBoard.moveTile(action);
         return new State(newBoard);
     }
 

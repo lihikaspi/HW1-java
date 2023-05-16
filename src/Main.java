@@ -15,7 +15,10 @@ public class Main {
                            "2 3 8 4 14 13 6|16 9 17 _ 10 5 7|1 11 15 18 12 19 20", // 13
                            "1 2 23 5 21 14 7 6 16|10 11 3 22 15 35 9 34 _|28 20 13 31 4 33 26 17 8|29 19 12 32 30 24 18 27 25"}; // 14
         int successCounter = 0;
+        int i = 1;
         for (String boardString : boards) {
+            System.out.println("board #" + i);
+            i++;
             boolean success = searchOnce(boardString);
             if (success) {
                 successCounter++;

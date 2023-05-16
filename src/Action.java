@@ -7,7 +7,6 @@ public class Action {
         this.direction = direction;
     }
 
-
     @Override
     public String toString() {
         String direction = null;
@@ -27,30 +26,11 @@ public class Action {
        return ("Move " + tile.getValue() + " " + direction); // example: Move 7 down
     }
 
-    public void moveTile(Board board) {
-        Tile[][] tiles = board.getTiles();
-        for (int i = 0; i < tiles.length; i++) {
-            for (int j = 0; j < tiles[i].length; j++) {
-                if (tiles[i][j].getValue() == 0) {
-                    switch (this.direction) {
-                        case RIGHT:
-                            board.swapTiles(i, j, i, j-1);
-                            return;
+    public Direction getDirection() {
+        return direction;
+    }
 
-                        case LEFT:
-                            board.swapTiles(i, j, i, j+1);
-                            return;
-
-                        case UP:
-                            board.swapTiles(i, j, i+1, j);
-                            return;
-
-                        case DOWN:
-                            board.swapTiles(i, j, i-1, j);
-                            return;
-                    }
-                }
-            }
-        }
+    public Tile getTile() {
+        return tile;
     }
 }
