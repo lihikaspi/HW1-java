@@ -84,16 +84,40 @@ public class Board {
         return place;
     }
 
-    public int calcHeuristicValue() {
+    public int calcHeuristicValue1() {
         int count = 1;
-        int value = numOfCols * numOfRows;
+        int value = (numOfCols * numOfRows)-1;
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles[i].length; j++) {
                 if (tiles[i][j].getValue() != count) {
                     int[] next = findTile(count);
                     int[] empty = findTile(0);
                     value *= (absolute(i-next[0]) + absolute(j-next[1]));
-                    value += (absolute(i-empty[0]) + absolute(j-empty[1]));
+                    int dist1 = absolute(i-empty[0]) + absolute(j-empty[1]);
+                    int dist2 = absolute(next[0]-empty[0]) + absolute(next[1]-empty[1]);
+                    value += (dist1-dist2);
+                    return value;
+                } else {
+                    value--;
+                    count++;
+                }
+            }
+        }
+        return value;
+    }
+
+    public int calcHeuristicValue2() {
+        int count = 1;
+        int value = (numOfCols * numOfRows)-1;
+        for (int i = 0; i < tiles.length; i++) {
+            for (int j = 0; j < tiles[i].length; j++) {
+                if (tiles[i][j].getValue() != count) {
+                    int[] next = findTile(count);
+                    int[] empty = findTile(0);
+                    value *= (absolute(i-next[0]) + absolute(j-next[1]));
+                    int dist1 = absolute(i-empty[0]) + absolute(j-empty[1]);
+                    int dist2 = absolute(next[0]-i) + absolute(next[1]-j);
+                    value += (dist1-dist2);
                     return value;
                 } else {
                     value--;

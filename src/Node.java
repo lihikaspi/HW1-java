@@ -25,7 +25,8 @@ public class Node {
     }
 
     public int heuristicValue() {
-        return state.getBoard().calcHeuristicValue();
+        return state.getBoard().calcHeuristicValue2();
+        //return Integer.max(state.getBoard().calcHeuristicValue1(), state.getBoard().calcHeuristicValue2());
     }
 
     public State getState() {
