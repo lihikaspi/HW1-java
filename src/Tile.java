@@ -3,7 +3,8 @@ public class Tile {
 
     public Tile() {
         this.value = 0;
-    }
+    } // default constructor // 0 for empty
+
     public Tile(int value) {
         this.value = value;
     }

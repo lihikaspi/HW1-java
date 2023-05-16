@@ -7,25 +7,49 @@ public class Action {
         this.direction = direction;
     }
 
+
     @Override
     public String toString() {
         String direction = null;
-        if (this.direction == Direction.UP) direction = "up";
-        else if (this.direction == Direction.DOWN) direction = "down";
-        else if (this.direction == Direction.RIGHT) direction = "right";
-        else if (this.direction == Direction.LEFT) direction = "left";
+        switch (this.direction) {
+            case UP:
+                direction = "up";
+
+            case DOWN:
+                direction = "down";
+
+            case RIGHT:
+                direction = "right";
+
+            case LEFT:
+                direction = "left";
+        }
        return ("Move " + tile.getValue() + " " + direction); // example: Move 7 down
     }
 
     public void moveTile(Board board) {
-        Tile[] tiles = board.getTiles();
+        Tile[][] tiles = board.getTiles();
         for (int i = 0; i < tiles.length; i++) {
-            if (tiles[i].getValue() == 0) {
-                if (this.direction == Direction.RIGHT) tiles[i+1] = tiles[i];
-                if (this.direction == Direction.LEFT) tiles[i-1] = tiles[i];
-                if (this.direction == Direction.UP) tiles[i-board.getRow()] = tiles[i];
-                if (this.direction == Direction.DOWN) tiles[i+board.getRow()] = tiles[i];
-                tiles[i] = this.tile;
+            for (int j = 0; j < tiles[i].length; j++) {
+                if (tiles[i][j].getValue() == 0) {
+                    switch (this.direction) {
+                        case RIGHT:
+                            board.swapTiles(i, j, i, j-1);
+                            return;
+
+                        case LEFT:
+                            board.swapTiles(i, j, i, j+1);
+                            return;
+
+                        case UP:
+                            board.swapTiles(i, j, i+1, j);
+                            return;
+
+                        case DOWN:
+                            board.swapTiles(i, j, i-1, j);
+                            return;
+                    }
+                }
             }
         }
     }
