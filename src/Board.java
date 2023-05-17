@@ -84,48 +84,28 @@ public class Board {
         return place;
     }
 
-    public int calcHeuristicValue1() {
+    public int calcHeuristicValue() {
         int count = 1;
-        int value = (numOfCols * numOfRows)-1;
-        for (int i = 0; i < tiles.length; i++) {
-            for (int j = 0; j < tiles[i].length; j++) {
-                if (tiles[i][j].getValue() != count) {
-                    int[] next = findTile(count);
-                    int[] empty = findTile(0);
-                    value *= (absolute(i-next[0]) + absolute(j-next[1]));
-                    int dist1 = absolute(i-empty[0]) + absolute(j-empty[1]);
-                    int dist2 = absolute(next[0]-empty[0]) + absolute(next[1]-empty[1]);
-                    value += (dist1-dist2);
-                    return value;
-                } else {
-                    value--;
-                    count++;
-                }
+        int numOfReversals = 0;
+        int value = 0;
+        for (int i = 0; i < numOfRows; i++) {
+            for (int j = 0; j < numOfCols; j++) {
+                if (reversal(i, j, count)) numOfReversals++;
+                int[] next = findTile(count);
+                value += (absolute(i-next[0]) + absolute(j-next[1]));
+                count++;
             }
         }
-        return value;
+        return value + numOfReversals*2;
     }
 
-    public int calcHeuristicValue2() {
-        int count = 1;
-        int value = (numOfCols * numOfRows)-1;
-        for (int i = 0; i < tiles.length; i++) {
-            for (int j = 0; j < tiles[i].length; j++) {
-                if (tiles[i][j].getValue() != count) {
-                    int[] next = findTile(count);
-                    int[] empty = findTile(0);
-                    value *= (absolute(i-next[0]) + absolute(j-next[1]));
-                    int dist1 = absolute(i-empty[0]) + absolute(j-empty[1]);
-                    int dist2 = absolute(next[0]-i) + absolute(next[1]-j);
-                    value += (dist1-dist2);
-                    return value;
-                } else {
-                    value--;
-                    count++;
-                }
-            }
-        }
-        return value;
+    public boolean reversal(int i, int j, int value) {
+        int valueRe = tiles[i][j].getValue();
+        if (i+1 < numOfRows && valueRe == (i+2)*(j+1) && tiles[i+1][j].getValue() == value) return true;
+        if (i-1 >= 0 && valueRe == i*(j+1) && tiles[i-1][j].getValue() == value) return true;
+        if (j+1 < numOfCols && valueRe == (i+1)*(j+2) && tiles[i][j+1].getValue() == value) return true;
+        if (j-1 >= 0 && valueRe == (i+1)*j && tiles[i][j-1].getValue() == value) return true;
+        return false;
     }
 
     public void moveTile(Action action) {
