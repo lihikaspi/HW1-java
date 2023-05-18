@@ -105,7 +105,47 @@ public class Board {
                 count++;
             }
         }
-        return distanceSum + numOfReversals*2;
+        return fullRowOrCol() + distanceSum + numOfReversals*2;
+    }
+
+    /**
+     * checks how many complete outer row/col
+     * @return number of not complete outer row/col
+     */
+    public int fullRowOrCol() {
+        int full = 0;
+        int count = 0;
+
+        for (int i = 0; i < numOfRows; i++) {
+            if (tiles[i][0].getValue() != (numOfCols*i)+1) count++;
+        }
+        if (count != 0) full += numOfRows;
+
+        count = 0;
+        for (int i = 0; i < numOfRows; i++) {
+            if (tiles[i][numOfCols-1].getValue() != (numOfCols*(i+1))) count++;
+        }
+        if (count != 0) full += numOfRows;
+
+        count = 0;
+        for (int j = 0; j < numOfCols; j++) {
+            if (tiles[0][j].getValue() != (j+1)) count++;
+        }
+        if (count != 0) full += numOfCols;
+
+        count = 0;
+        for (int j = 0; j < numOfCols-1; j++) {
+            if (tiles[numOfRows-1][j].getValue() != (numOfCols*(numOfRows-1))+(j+1)) count++;
+        }
+        if (tiles[numOfRows-1][numOfCols-1].getValue() != 0) count++;
+        if (count != 0) full += numOfCols;
+        count = 0;
+
+        return full;
+    }
+
+    public int snakes() {
+        //TODO: search for length of snakes on board, positive weight for snakes
     }
 
     /**
