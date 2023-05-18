@@ -6,7 +6,7 @@ public class Board {
     private final int numOfCols; // how many columns
 
     /**
-     * regular constructor
+     * Regular constructor
      * @param boardString String of board
      */
     public Board(String boardString) {
@@ -27,8 +27,8 @@ public class Board {
     }
 
     /**
-     * copy constructor
-     * @param board board to copy
+     * Copy constructor
+     * @param board Board to copy
      */
     public Board(Board board) {
         this.numOfCols = board.getNumOfCols();
@@ -42,11 +42,11 @@ public class Board {
     }
 
     /**
-     * swapping two tiles on the board
-     * @param i1 row of fist tile
-     * @param j1 col of first tile
-     * @param i2 row of second tile
-     * @param j2 col of second tile
+     * Swaps two tiles on the board
+     * @param i1 Row of fist tile
+     * @param j1 Col of first tile
+     * @param i2 Row of second tile
+     * @param j2 Col of second tile
      */
     public void swapTiles(int i1, int j1, int i2, int j2) {
         Tile temp = this.tiles[i1][j1];
@@ -55,8 +55,8 @@ public class Board {
     }
 
     /**
-     * checks if the board is complete
-     * @return is target
+     * Checks if the board is completed
+     * @return Is target board
      */
     public boolean checkTarget() {
         int count = 1;
@@ -70,6 +70,11 @@ public class Board {
         return true;
     }
 
+    /**
+     * Finds the place of the tile with a given value
+     * @param value Value of tile to find
+     * @return Array containing coordinates of found tile
+     */
     public int[] findTile(int value) {
         int[] place = new int[2];
         for (int i = 0; i < this.numOfRows; i++) {
@@ -84,21 +89,32 @@ public class Board {
         return place;
     }
 
+    /**
+     * Calculates the current board's heuristic value
+     * @return Integer representing the heuristic value
+     */
     public int calcHeuristicValue() {
         int count = 1;
         int numOfReversals = 0;
-        int value = 0;
+        int distanceSum = 0;
         for (int i = 0; i < numOfRows; i++) {
             for (int j = 0; j < numOfCols; j++) {
                 if (reversal(i, j, count)) numOfReversals++;
                 int[] next = findTile(count);
-                value += (absolute(i-next[0]) + absolute(j-next[1]));
+                distanceSum += (absolute(i-next[0]) + absolute(j-next[1]));
                 count++;
             }
         }
-        return value + numOfReversals*2;
+        return distanceSum + numOfReversals*2;
     }
 
+    /**
+     * Checks if tile should be in a swapped position with a tile next to it
+     * @param i Row of tile
+     * @param j Column of tile
+     * @param value Value that should be in the tile's place
+     * @return Does the tile have a direct reversal around it
+     */
     public boolean reversal(int i, int j, int value) {
         int valueRe = tiles[i][j].getValue();
         if (i+1 < numOfRows && valueRe == (i+2)*(j+1) && tiles[i+1][j].getValue() == value) return true;
@@ -108,10 +124,14 @@ public class Board {
         return false;
     }
 
+    /**
+     * Moves a tile into the empty spot
+     * @param action Action to make, containing a tile and a direction
+     */
     public void moveTile(Action action) {
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles[i].length; j++) {
-                if (tiles[i][j].getValue() == 0) {
+                if (tiles[i][j].getValue() == 0) { //Check where the empty tile is first
                     switch (action.getDirection()) {
                         case RIGHT:
                             swapTiles(i, j, i, j-1);
@@ -134,30 +154,35 @@ public class Board {
         }
     }
 
+    /**
+     * Calculates absolute value of int
+     * @param num Number
+     * @return Absolute value
+     */
     private int absolute(int num) {
         if (num >= 0) return num;
         return -num;
     }
 
     /**
-     * get tiles array
-     * @return tiles array
+     * Get tiles array
+     * @return Tiles array
      */
     public Tile[][] getTiles() {
         return this.tiles;
     }
 
     /**
-     * get how many rows
-     * @return number of rows
+     * Get how many rows
+     * @return Number of rows
      */
     public int getNumOfRows() {
         return this.numOfRows;
     }
 
     /**
-     * get how many columns
-     * @return number of columns
+     * Get how many columns
+     * @return Number of columns
      */
     public int getNumOfCols() {
         return this.numOfCols;

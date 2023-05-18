@@ -23,6 +23,12 @@ public class State {
         return actions;
     }
 
+    /**
+     * Append a new action to an array
+     * @param actions Array of existing actions
+     * @param add Action to be added to array
+     * @return New array containing all actions
+     */
     private Action[] append(Action[] actions, Action add) {
         Action[] newActions = new Action[actions.length+1];
         for (int i = 0; i < actions.length; i++) {

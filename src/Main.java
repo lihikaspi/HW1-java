@@ -17,7 +17,7 @@ public class Main {
         int successCounter = 0;
         int i = 1;
         for (String boardString : boards) {
-            System.out.println("board #" + i);
+            //System.out.println("board #" + i);
             i++;
             boolean success = searchOnce(boardString);
             if (success) {
