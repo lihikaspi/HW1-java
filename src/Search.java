@@ -21,8 +21,7 @@ public class Search {
     private Node getRoot(String boardString) {
         Board board = new Board(boardString);
         State state = new State(board);
-        Node startNode = new Node(state);
-        return startNode;
+        return new Node(state);
     }
 
     /**

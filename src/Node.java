@@ -1,7 +1,7 @@
 public class Node {
-    private State state;
-    private Action action;
-    private Node parent;
+    private final State state;
+    private final Action action;
+    private final Node parent;
 
     public Node(State state, Action action, Node parent) {
         this.state = state;

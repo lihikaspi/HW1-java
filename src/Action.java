@@ -29,8 +29,4 @@ public class Action {
     public Direction getDirection() {
         return direction;
     }
-
-    public Tile getTile() {
-        return tile;
-    }
 }

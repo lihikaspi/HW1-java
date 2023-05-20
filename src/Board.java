@@ -48,7 +48,7 @@ public class Board {
      * @param i2 Row of second tile
      * @param j2 Col of second tile
      */
-    public void swapTiles(int i1, int j1, int i2, int j2) {
+    private void swapTiles(int i1, int j1, int i2, int j2) {
         Tile temp = this.tiles[i1][j1];
         this.tiles[i1][j1] = this.tiles[i2][j2];
         this.tiles[i2][j2] = temp;
@@ -97,14 +97,16 @@ public class Board {
         int count = 1;
         int numOfReversals = 0;
         int distanceSum = 0;
+        //int snakes = 0;
         for (int i = 0; i < numOfRows; i++) {
             for (int j = 0; j < numOfCols; j++) {
                 if (reversal(i, j, count)) numOfReversals++;
                 int[] next = findTile(count);
+                //snakes += snake(i, j);
                 distanceSum += (absolute(i-next[0]) + absolute(j-next[1]));
                 count++;
             }
-        }
+        } // snakes +
         return fullRowOrCol() + distanceSum + numOfReversals*2;
     }
 
@@ -112,7 +114,7 @@ public class Board {
      * checks how many complete outer row/col
      * @return number of not complete outer row/col
      */
-    public int fullRowOrCol() {
+    private int fullRowOrCol() {
         int full = 0;
         int count = 0;
 
@@ -139,14 +141,33 @@ public class Board {
         }
         if (tiles[numOfRows-1][numOfCols-1].getValue() != 0) count++;
         if (count != 0) full += numOfCols;
-        count = 0;
 
         return full;
     }
 
-    public int snakes() {
-        //TODO: search for length of snakes on board, positive weight for snakes
+    /*
+    private int snake(int i, int j) {
+        //TODO: search for length of snake on board, positive weight for snakes
+        int count = 0;
+        while(true) {
+            int value = tiles[i][j].getValue()+1;
+            if (value > (numOfCols*numOfRows)-1) return count;
+            int[] next = findTile(value);
+            if (nextTo(next, i, j)) return count;
+            else {
+                count++;
+                i = next[0];
+                j = next[1];
+            }
+        }
     }
+
+    private boolean nextTo(int[] next, int i, int j) {
+        if (next[0] < i) return false;
+        if (absolute(next[1]-j) > 2) return false;
+        return true;
+    }
+     */
 
     /**
      * Checks if tile should be in a swapped position with a tile next to it
@@ -155,7 +176,7 @@ public class Board {
      * @param value Value that should be in the tile's place
      * @return Does the tile have a direct reversal around it
      */
-    public boolean reversal(int i, int j, int value) {
+    private boolean reversal(int i, int j, int value) {
         int valueRe = tiles[i][j].getValue();
         if (i+1 < numOfRows && valueRe == (i+2)*(j+1) && tiles[i+1][j].getValue() == value) return true;
         if (i-1 >= 0 && valueRe == i*(j+1) && tiles[i-1][j].getValue() == value) return true;
