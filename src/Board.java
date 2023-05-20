@@ -97,23 +97,50 @@ public class Board {
         int count = 1;
         int numOfReversals = 0;
         int distanceSum = 0;
-        //int snakes = 0;
         for (int i = 0; i < numOfRows; i++) {
             for (int j = 0; j < numOfCols; j++) {
                 if (reversal(i, j, count)) numOfReversals++;
                 int[] next = findTile(count);
-                //snakes += snake(i, j);
                 distanceSum += (absolute(i-next[0]) + absolute(j-next[1]));
                 count++;
             }
-        } // snakes +
+        }
         return fullRowOrCol() + distanceSum + numOfReversals*2;
     }
+
+//
+//    private int fullRow() {
+//       int full = 0;
+//       int count = 0;
+//       for (int i = 0; i < numOfRows; i++) {
+//           for (int j = 0; j < numOfCols; j++) {
+//               if (i == numOfRows-1 && j == numOfCols-1 && tiles[i][j].getValue() != 0) count++;
+//               else if (tiles[i][j].getValue() != (numOfCols*i)+j) count++;
+//           }
+//           if (count != 0) return numOfCols*(i+1);
+//       }
+//       return full;
+//    }
+//
+//    private int fullCol() {
+//        int full = 0;
+//        int count = 0;
+//        for (int j = 0; j < numOfCols; j++) {
+//            for (int i = 0; i < numOfRows; i++) {
+//                if (i == numOfRows-1 && j == numOfCols-1 && tiles[i][j].getValue() != 0) count++;
+//                else if (tiles[i][j].getValue() != (numOfCols*i)+j) count++;
+//            }
+//            if (count != 0) return numOfRows*(j+1);
+//        }
+//        return full;
+//    }
+//
 
     /**
      * checks how many complete outer row/col
      * @return number of not complete outer row/col
      */
+
     private int fullRowOrCol() {
         int full = 0;
         int count = 0;
@@ -144,30 +171,6 @@ public class Board {
 
         return full;
     }
-
-    /*
-    private int snake(int i, int j) {
-        //TODO: search for length of snake on board, positive weight for snakes
-        int count = 0;
-        while(true) {
-            int value = tiles[i][j].getValue()+1;
-            if (value > (numOfCols*numOfRows)-1) return count;
-            int[] next = findTile(value);
-            if (nextTo(next, i, j)) return count;
-            else {
-                count++;
-                i = next[0];
-                j = next[1];
-            }
-        }
-    }
-
-    private boolean nextTo(int[] next, int i, int j) {
-        if (next[0] < i) return false;
-        if (absolute(next[1]-j) > 2) return false;
-        return true;
-    }
-     */
 
     /**
      * Checks if tile should be in a swapped position with a tile next to it
