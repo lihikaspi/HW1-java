@@ -1,14 +1,25 @@
 public class Tile {
     private final int value; // cannot change after initialization // 0 for empty tile
 
+    /**
+     * default constructor
+     */
     public Tile() {
         this.value = 0;
-    } // default constructor // 0 for empty
+    }
 
+    /**
+     * constructor
+     * @param value tile number
+     */
     public Tile(int value) {
         this.value = value;
     }
 
+    /**
+     * get tile number
+     * @return tile number
+     */
     public int getValue() {
         return this.value;
     }

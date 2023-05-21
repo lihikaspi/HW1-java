@@ -1,14 +1,26 @@
 public class State {
     private final Board board;
 
+    /**
+     * regular constructor
+     * @param board current board
+     */
     public State(Board board) {
         this.board = board;
     }
 
+    /**
+     * checks if the all tiles are in their place
+     * @return if the board is completed
+     */
     public boolean isGoal() {
         return this.board.checkTarget();
     }
 
+    /**
+     * checks what are the available actions on current board
+     * @return array of available actions
+     */
     public Action[] actions() {
         int[] empty  = board.findTile(0);
         Action[] actions = new Action[0];
@@ -38,12 +50,21 @@ public class State {
         return newActions;
     }
 
+    /**
+     * move a tile and create new State
+     * @param action action to perform
+     * @return new State after move
+     */
     public State result(Action action) {
         Board newBoard = new Board(this.board);
         newBoard.moveTile(action);
         return new State(newBoard);
     }
 
+    /**
+     * get current board
+     * @return current board
+     */
     public Board getBoard(){
         return this.board;
     }

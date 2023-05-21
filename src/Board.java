@@ -108,39 +108,10 @@ public class Board {
         return fullRowOrCol() + distanceSum + numOfReversals*2;
     }
 
-//
-//    private int fullRow() {
-//       int full = 0;
-//       int count = 0;
-//       for (int i = 0; i < numOfRows; i++) {
-//           for (int j = 0; j < numOfCols; j++) {
-//               if (i == numOfRows-1 && j == numOfCols-1 && tiles[i][j].getValue() != 0) count++;
-//               else if (tiles[i][j].getValue() != (numOfCols*i)+j) count++;
-//           }
-//           if (count != 0) return numOfCols*(i+1);
-//       }
-//       return full;
-//    }
-//
-//    private int fullCol() {
-//        int full = 0;
-//        int count = 0;
-//        for (int j = 0; j < numOfCols; j++) {
-//            for (int i = 0; i < numOfRows; i++) {
-//                if (i == numOfRows-1 && j == numOfCols-1 && tiles[i][j].getValue() != 0) count++;
-//                else if (tiles[i][j].getValue() != (numOfCols*i)+j) count++;
-//            }
-//            if (count != 0) return numOfRows*(j+1);
-//        }
-//        return full;
-//    }
-//
-
     /**
      * checks how many complete outer row/col
-     * @return number of not complete outer row/col
+     * @return number of not complete outer row/col as weights to heuristic value
      */
-
     private int fullRowOrCol() {
         int full = 0;
         int count = 0;
@@ -195,7 +166,7 @@ public class Board {
     public void moveTile(Action action) {
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles[i].length; j++) {
-                if (tiles[i][j].getValue() == 0) { //Check where the empty tile is first
+                if (tiles[i][j].getValue() == 0) { // Check where the empty tile is first
                     switch (action.getDirection()) {
                         case RIGHT:
                             swapTiles(i, j, i, j-1);
